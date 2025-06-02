@@ -4,7 +4,7 @@ metadata:
   name: annotations
   annotations:
     imageregistry: "https://hub.docker.com/"
-    buildURL: "https:jenkins.ramanji4.com/expense/backend/build/67"
+    buildURL: "https://jenkins.ramanji4.com/expense/backend/build/67"
 spec:
   containers:
   - name: nginx
