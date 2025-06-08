@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-dynamic
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "expense-ebs"
+  resources:
+    requests:
+      storage: 3Gi
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-dynamic
+  labels:
+    purpose: ebs-dynamic
+spec:
+  nodeselector: 
+    topology.kubernetes.io/zone: 
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+      - mountPath: "/usr/share/nginx/html"
+        name: ebs-dynamic
+  volumes:
+    - name: ebs-dynamic
+      persistentVolumeClaim:
+        claimName: ebs-dynamic
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-dynamic
+  ports:
+    - name: nginx-svc-port
+      protocol: TCP
+      port: 80 #service port
+      targetPort: 80  #container port
+      nodePort: 30007
