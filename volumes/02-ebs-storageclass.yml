@@ -4,4 +4,4 @@ metadata:
   name: expense-ebs
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Retain 
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: WaitForFirstConsumer   #storage will be created when pod is getting created
