@@ -27,41 +27,41 @@ spec:
     requests:
       storage: 5Gi
 
-# ---
+---
 
-# apiVersion: v1
-# kind: Pod
-# metadata:
-#   name: ebs-static
-#   labels:
-#     purpose: ebs-static
-# spec:
-#   nodeSelector: 
-#     topology.kubernetes.io/zone: us-east-1c
-#   containers:
-#     - name: nginx
-#       image: nginx
-#       volumeMounts:
-#       - mountPath: "/usr/share/nginx/html"
-#         name: ebs-static
-#   volumes:
-#     - name: ebs-static
-#       persistentVolumeClaim:
-#         claimName: ebs-static
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-static
+  labels:
+    purpose: ebs-static
+spec:
+  nodeSelector: 
+    topology.kubernetes.io/zone: us-east-1c
+  containers:
+    - name: nginx
+      image: nginx
+      volumeMounts:
+      - mountPath: "/usr/share/nginx/html"
+        name: ebs-static
+  volumes:
+    - name: ebs-static
+      persistentVolumeClaim:
+        claimName: ebs-static
 
-# ---
+---
 
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: nginx
-# spec:
-#   type: LoadBalancer
-#   selector:
-#     purpose: ebs-static
-#   ports:
-#     - name: nginx-svc-port
-#       protocol: TCP
-#       port: 80 #service port
-#       targetPort: 80  #container port
-#       nodePort: 30007
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: LoadBalancer
+  selector:
+    purpose: ebs-static
+  ports:
+    - name: nginx-svc-port
+      protocol: TCP
+      port: 80 #service port
+      targetPort: 80  #container port
+      nodePort: 30007
